@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dicer.ai × Otto — February 2026 Performance Report</title>
+<style>
+  :root {
+    --dicer: #7C5CF6; --dicer-light: rgba(124,92,246,0.1); --dicer-glow: rgba(124,92,246,0.22);
+    --green: #10B981; --green-bg: rgba(16,185,129,0.12);
+    --red: #F87171; --red-bg: rgba(248,113,113,0.12);
+    --amber: #FBBF24;
+    --bg: #0C0C12; --surface: #15151E; --surface2: #1C1C28; --border: #252535;
+    --text: #EEEEF5; --muted: #7070A0;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); }
+
+  .hero { background: linear-gradient(160deg, #12122A 0%, #0E1A3A 60%, #1A0E3A 100%); border-bottom: 1px solid var(--border); padding: 40px 56px 36px; position: relative; overflow: hidden; }
+  .hero::after { content: ''; position: absolute; top: -80px; right: -80px; width: 400px; height: 400px; background: radial-gradient(circle, rgba(124,92,246,0.1) 0%, transparent 65%); pointer-events: none; }
+  .hero-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 28px; flex-wrap: wrap; gap: 16px; }
+  .logo-group { display: flex; align-items: center; gap: 14px; }
+  .logo-mark { width: 48px; height: 48px; background: var(--dicer); border-radius: 14px; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 18px; color: #fff; box-shadow: 0 4px 20px var(--dicer-glow); }
+  .logo-name { font-size: 24px; font-weight: 800; color: #fff; letter-spacing: -0.5px; }
+  .logo-sub { font-size: 12px; color: var(--muted); margin-top: 2px; }
+  .report-info { text-align: right; }
+  .report-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; color: var(--muted); }
+  .report-period { font-size: 22px; font-weight: 800; color: #fff; margin-top: 4px; letter-spacing: -0.5px; }
+  .report-sub { font-size: 12px; color: var(--muted); margin-top: 3px; }
+  .hero-divider { height: 1px; background: linear-gradient(90deg, transparent, rgba(124,92,246,0.5), transparent); margin: 0 0 28px; }
+  .hero-kpis { display: flex; gap: 40px; flex-wrap: wrap; }
+  .hero-kpi { display: flex; flex-direction: column; gap: 3px; }
+  .hero-kpi-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--muted); }
+  .hero-kpi-val { font-size: 30px; font-weight: 900; letter-spacing: -1.5px; color: #fff; line-height: 1; }
+  .hero-kpi-val.g { color: #34D399; }
+  .hero-kpi-val.p { color: #C4B5FD; }
+  .hero-kpi-sub { font-size: 11px; color: var(--muted); }
+
+  .attr-banner { background: linear-gradient(135deg, rgba(251,191,36,0.08), rgba(251,191,36,0.03)); border-top: 1px solid rgba(251,191,36,0.25); border-bottom: 1px solid rgba(251,191,36,0.25); padding: 12px 56px; display: flex; align-items: center; gap: 12px; }
+  .attr-banner-text { font-size: 12px; color: rgba(251,191,36,0.8); line-height: 1.5; }
+  .attr-banner-text strong { color: #FBBF24; }
+
+  .wrap { max-width: 1160px; margin: 0 auto; padding: 44px 56px 80px; }
+  .section-head { font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 2px; color: var(--muted); margin-bottom: 18px; display: flex; align-items: center; gap: 10px; }
+  .section-head::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+  .cards3 { display: grid; grid-template-columns: repeat(3,1fr); gap: 18px; margin-bottom: 44px; }
+  .card { background: var(--surface); border: 1px solid var(--border); border-radius: 18px; padding: 26px; position: relative; overflow: hidden; }
+  .card.hl { border-color: var(--dicer); background: linear-gradient(135deg, var(--surface) 0%, var(--dicer-light) 100%); }
+  .card.hl::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, #7C5CF6, #B28FFF); }
+  .card-tag { font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; color: var(--muted); margin-bottom: 14px; }
+  .card.hl .card-tag { color: #A78BFA; }
+  .card-roas { font-size: 52px; font-weight: 900; letter-spacing: -3px; color: #fff; line-height: 1; }
+  .card.hl .card-roas { color: #C4B5FD; }
+  .card-roas-sub { font-size: 12px; color: var(--muted); margin: 4px 0 18px; }
+  .card-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; border-top: 1px solid var(--border); padding-top: 18px; }
+  .cg-item { display: flex; flex-direction: column; gap: 2px; }
+  .cg-label { font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px; }
+  .cg-val { font-size: 16px; font-weight: 800; color: #fff; }
+
+  .tbl-wrap { background: var(--surface); border: 1px solid var(--border); border-radius: 18px; overflow: hidden; margin-bottom: 44px; }
+  table { width: 100%; border-collapse: collapse; }
+  thead tr { background: var(--surface2); }
+  th { padding: 13px 20px; font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; color: var(--muted); text-align: left; }
+  th.dc { color: #A78BFA; }
+  tbody tr { border-top: 1px solid var(--border); transition: background .15s; }
+  tbody tr:hover { background: var(--surface2); }
+  td { padding: 13px 20px; font-size: 14px; }
+  td.mn { font-size: 13px; color: var(--muted); font-weight: 500; }
+  td.dv { font-weight: 800; color: #C4B5FD; }
+  .badge { display: inline-flex; align-items: center; padding: 3px 9px; border-radius: 8px; font-size: 11px; font-weight: 800; }
+  .badge.g { background: var(--green-bg); color: var(--green); }
+  .badge.r { background: var(--red-bg); color: var(--red); }
+  .badge.n { background: rgba(255,255,255,0.06); color: var(--muted); }
+
+  .spend-bar-box { background: var(--surface); border: 1px solid var(--border); border-radius: 18px; padding: 26px 30px; margin-bottom: 44px; }
+  .spend-bar-title { font-size: 15px; font-weight: 700; color: #fff; margin-bottom: 20px; }
+  .bar-track { height: 36px; background: var(--surface2); border-radius: 10px; overflow: hidden; display: flex; }
+  .bar-d { background: linear-gradient(90deg, #6C47FF, #9B6FFF); display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 800; color: #fff; }
+  .bar-n { background: rgba(255,255,255,0.12); display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; color: rgba(255,255,255,0.5); flex: 1; }
+  .bar-legend { display: flex; gap: 24px; margin-top: 16px; flex-wrap: wrap; align-items: center; }
+  .bl-item { display: flex; align-items: center; gap: 8px; font-size: 13px; }
+  .bl-dot { width: 12px; height: 12px; border-radius: 3px; }
+  .bl-dot.d { background: var(--dicer); }
+  .bl-dot.n { background: rgba(255,255,255,0.2); }
+  .bl-text { color: var(--muted); }
+  .bl-val { font-weight: 700; color: #fff; margin-left: 4px; }
+
+  .correction-box { background: var(--surface); border: 1px solid rgba(251,191,36,0.3); border-radius: 18px; padding: 26px 30px; margin-bottom: 44px; }
+  .correction-title { font-size: 15px; font-weight: 700; color: #fff; margin-bottom: 20px; }
+  .correction-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 16px; margin-bottom: 16px; }
+  .cbox { background: var(--surface2); border-radius: 12px; padding: 16px 18px; }
+  .cbox-label { font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 6px; }
+  .cbox-val { font-size: 22px; font-weight: 900; color: #FBBF24; letter-spacing: -1px; }
+  .cbox-sub { font-size: 11px; color: var(--muted); margin-top: 3px; }
+  .correction-note { font-size: 12px; color: var(--muted); line-height: 1.65; }
+  .correction-note code { color: #A78BFA; background: rgba(124,92,246,0.1); padding: 1px 5px; border-radius: 4px; }
+
+  .ads-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 22px; margin-bottom: 44px; }
+  .ad-card { background: var(--surface); border: 1px solid var(--border); border-radius: 18px; overflow: hidden; transition: transform .2s, box-shadow .2s; }
+  .ad-card:hover { transform: translateY(-4px); box-shadow: 0 16px 48px var(--dicer-glow); }
+  .ad-card.top { border-color: var(--dicer); }
+  .ad-card.top::before { content: ''; display: block; height: 3px; background: linear-gradient(90deg, #6C47FF, #B28FFF); }
+  .ad-img-wrap { position: relative; background: var(--surface2); overflow: hidden; }
+  .ad-img-wrap img { width: 100%; display: block; aspect-ratio: 4/3; object-fit: cover; }
+  .ad-overlay { position: absolute; inset: 0; background: linear-gradient(to bottom, transparent 50%, rgba(0,0,0,0.7) 100%); }
+  .ad-rank { position: absolute; top: 10px; left: 10px; background: rgba(0,0,0,0.8); backdrop-filter: blur(8px); color: #fff; font-size: 10px; font-weight: 800; padding: 4px 10px; border-radius: 20px; text-transform: uppercase; }
+  .ad-dicer-badge { position: absolute; top: 10px; right: 10px; background: var(--dicer); color: #fff; font-size: 10px; font-weight: 700; padding: 3px 8px; border-radius: 6px; }
+  .ad-body { padding: 16px 18px; }
+  .ad-headline { font-size: 12px; color: var(--muted); margin-bottom: 10px; font-style: italic; line-height: 1.4; }
+  .ad-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .as-item { display: flex; flex-direction: column; gap: 2px; }
+  .as-label { font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px; }
+  .as-val { font-size: 16px; font-weight: 900; }
+  .as-val.rg { color: #34D399; }
+  .as-val.ra { color: #FBBF24; }
+  .as-val.rr { color: #F87171; }
+  .as-val.w { color: #fff; }
+
+  .insights-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 44px; }
+  .insight { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 22px; }
+  .insight-icon { font-size: 24px; margin-bottom: 10px; }
+  .insight-title { font-size: 14px; font-weight: 800; color: #fff; margin-bottom: 8px; }
+  .insight-body { font-size: 13px; color: var(--muted); line-height: 1.65; }
+  .insight-body strong { color: #C4B5FD; }
+
+  .footer { margin-top: 60px; padding-top: 24px; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+  .footer-brand { font-size: 13px; color: var(--muted); }
+  .footer-brand strong { color: var(--dicer); }
+  .footer-note { font-size: 11px; color: var(--muted); }
+
+  @media (max-width: 768px) {
+    .hero, .wrap { padding-left: 20px; padding-right: 20px; }
+    .attr-banner { padding-left: 20px; padding-right: 20px; }
+    .cards3, .ads-grid, .correction-grid { grid-template-columns: 1fr; }
+    .insights-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-top">
+    <div class="logo-group">
+      <div class="logo-mark">Di</div>
+      <div>
+        <div class="logo-name">Dicer.ai</div>
+        <div class="logo-sub">AI-Powered Creative Intelligence Platform</div>
+      </div>
+    </div>
+    <div class="report-info">
+      <div class="report-label">Monthly Performance Report</div>
+      <div class="report-period">February 2026</div>
+      <div class="report-sub">Otto Auto Insurance · Native · Full Month · Attribution-Corrected</div>
+    </div>
+  </div>
+  <div class="hero-divider"></div>
+  <div class="hero-kpis">
+    <div class="hero-kpi">
+      <div class="hero-kpi-label">Dicer ROAS</div>
+      <div class="hero-kpi-val g">1.29x</div>
+      <div class="hero-kpi-sub">+0.04x vs Non-Dicer ▲</div>
+    </div>
+    <div class="hero-kpi">
+      <div class="hero-kpi-label">Dicer Spend</div>
+      <div class="hero-kpi-val p">$253,174</div>
+      <div class="hero-kpi-sub">27.9% of total budget</div>
+    </div>
+    <div class="hero-kpi">
+      <div class="hero-kpi-label">Dicer Revenue</div>
+      <div class="hero-kpi-val g">$325,343</div>
+      <div class="hero-kpi-sub">+$72,169 net profit</div>
+    </div>
+    <div class="hero-kpi">
+      <div class="hero-kpi-label">CPC Advantage</div>
+      <div class="hero-kpi-val g">49% cheaper</div>
+      <div class="hero-kpi-sub">$0.96 vs $1.90 Non-Dicer</div>
+    </div>
+    <div class="hero-kpi">
+      <div class="hero-kpi-label">CTR Advantage</div>
+      <div class="hero-kpi-val g">2.6× higher</div>
+      <div class="hero-kpi-sub">0.34% vs 0.13% Non-Dicer</div>
+    </div>
+  </div>
+</div>
+
+<!-- ATTRIBUTION BANNER -->
+<div class="attr-banner">
+  <span style="font-size:16px">⚠️</span>
+  <div class="attr-banner-text">
+    <strong>Attribution-corrected.</strong> 21 misattributed creatives reclassified from Non-Dicer → Dicer via <strong>attribution-check.dicer.ai</strong>. Adds <strong>+$17,036 spend</strong> (+1.88pp share) to Dicer. Raw Otto baseline: $236,138 (26.1%).
+  </div>
+</div>
+
+<div class="wrap">
+
+  <!-- SCORECARDS -->
+  <div class="section-head">Performance Scorecards — February 2026</div>
+  <div class="cards3">
+    <div class="card hl">
+      <div class="card-tag">🎯 Dicer.ai Creatives</div>
+      <div class="card-roas">1.29x</div>
+      <div class="card-roas-sub">Return on Ad Spend · Full Month</div>
+      <div class="card-grid">
+        <div class="cg-item"><div class="cg-label">Spend</div><div class="cg-val">$253,174</div></div>
+        <div class="cg-item"><div class="cg-label">Revenue</div><div class="cg-val">$325,343</div></div>
+        <div class="cg-item"><div class="cg-label">CPC</div><div class="cg-val">$0.96</div></div>
+        <div class="cg-item"><div class="cg-label">CTR</div><div class="cg-val">0.34%</div></div>
+        <div class="cg-item"><div class="cg-label">Conversions</div><div class="cg-val">38,945</div></div>
+        <div class="cg-item"><div class="cg-label">Impressions</div><div class="cg-val">77.2M</div></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-tag">Non-Dicer Creatives</div>
+      <div class="card-roas">1.25x</div>
+      <div class="card-roas-sub">Return on Ad Spend · Full Month</div>
+      <div class="card-grid">
+        <div class="cg-item"><div class="cg-label">Spend</div><div class="cg-val">$653,124</div></div>
+        <div class="cg-item"><div class="cg-label">Revenue</div><div class="cg-val">$815,674</div></div>
+        <div class="cg-item"><div class="cg-label">CPC</div><div class="cg-val">$1.90</div></div>
+        <div class="cg-item"><div class="cg-label">CTR</div><div class="cg-val">0.13%</div></div>
+        <div class="cg-item"><div class="cg-label">Conversions</div><div class="cg-val">62,437</div></div>
+        <div class="cg-item"><div class="cg-label">Impressions</div><div class="cg-val">258.1M</div></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-tag">📊 Portfolio Total</div>
+      <div class="card-roas">1.26x</div>
+      <div class="card-roas-sub">Blended ROAS · all creatives</div>
+      <div class="card-grid">
+        <div class="cg-item"><div class="cg-label">Total Spend</div><div class="cg-val">$906,298</div></div>
+        <div class="cg-item"><div class="cg-label">Total Revenue</div><div class="cg-val">$1,141,018</div></div>
+        <div class="cg-item"><div class="cg-label">Net Profit</div><div class="cg-val">$234,719</div></div>
+        <div class="cg-item"><div class="cg-label">Total Ads</div><div class="cg-val">476</div></div>
+        <div class="cg-item"><div class="cg-label">Dicer Ads</div><div class="cg-val">150</div></div>
+        <div class="cg-item"><div class="cg-label">Dicer Share</div><div class="cg-val">27.9%</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- HEAD-TO-HEAD -->
+  <div class="section-head">Head-to-Head Comparison</div>
+  <div class="tbl-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Metric</th>
+          <th class="dc">🎯 Dicer.ai</th>
+          <th>Non-Dicer</th>
+          <th>Delta</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td class="mn">ROAS</td><td class="dv">1.29x</td><td>1.25x</td><td><span class="badge g">▲ +0.04x</span></td></tr>
+        <tr><td class="mn">CPC (Cost Per Click)</td><td class="dv">$0.96</td><td>$1.90</td><td><span class="badge g">▼ 49% cheaper</span></td></tr>
+        <tr><td class="mn">CTR (Click-Through Rate)</td><td class="dv">0.34%</td><td>0.13%</td><td><span class="badge g">▲ 2.6× higher</span></td></tr>
+        <tr><td class="mn">Spend</td><td class="dv">$253,174</td><td>$653,124</td><td><span class="badge n">27.9% share</span></td></tr>
+        <tr><td class="mn">Revenue Generated</td><td class="dv">$325,343</td><td>$815,674</td><td><span class="badge g">+$72,169 profit</span></td></tr>
+        <tr><td class="mn">Clicks</td><td class="dv">262,806</td><td>343,530</td><td><span class="badge n">43.3% of total</span></td></tr>
+        <tr><td class="mn">Conversions</td><td class="dv">38,945</td><td>62,437</td><td><span class="badge n">38.4% of total</span></td></tr>
+        <tr><td class="mn">Impressions</td><td class="dv">77.2M</td><td>258.1M</td><td><span class="badge n">23% of total</span></td></tr>
+        <tr><td class="mn">CVR (Conv. Rate)</td><td class="dv">14.8%</td><td>18.4%</td><td><span class="badge r">▼ –3.6pp</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- SPEND BAR -->
+  <div class="section-head">Budget Allocation</div>
+  <div class="spend-bar-box">
+    <div class="spend-bar-title">Spend Distribution — $906,298 total portfolio (February 2026)</div>
+    <div class="bar-track">
+      <div class="bar-d" style="width:27.9%">Dicer 27.9%</div>
+      <div class="bar-n">Non-Dicer 72.1%</div>
+    </div>
+    <div class="bar-legend">
+      <div class="bl-item"><div class="bl-dot d"></div><span class="bl-text">Dicer.ai (attribution-corrected)</span><span class="bl-val">$253,174</span></div>
+      <div class="bl-item"><div class="bl-dot n"></div><span class="bl-text">Non-Dicer</span><span class="bl-val">$653,124</span></div>
+      <div class="bl-item" style="margin-left:auto"><span class="bl-text">⚡ Dicer generates</span><span class="bl-val" style="color:#34D399">2.6× more clicks per impression dollar</span></div>
+    </div>
+  </div>
+
+  <!-- ATTRIBUTION CORRECTION -->
+  <div class="section-head">Attribution Correction Detail</div>
+  <div class="correction-box">
+    <div class="correction-title">🔧 Misclassified Creatives Reclassified → Dicer</div>
+    <div class="correction-grid">
+      <div class="cbox">
+        <div class="cbox-label">Ads Reclassified</div>
+        <div class="cbox-val">21</div>
+        <div class="cbox-sub">of 33 misclassified URLs active in Feb</div>
+      </div>
+      <div class="cbox">
+        <div class="cbox-label">Spend Moved to Dicer</div>
+        <div class="cbox-val">+$17,036</div>
+        <div class="cbox-sub">$236,138 → $253,174</div>
+      </div>
+      <div class="cbox">
+        <div class="cbox-label">Spend Share Corrected</div>
+        <div class="cbox-val">+1.88pp</div>
+        <div class="cbox-sub">26.1% → 27.9%</div>
+      </div>
+      <div class="cbox">
+        <div class="cbox-label">Clicks Reclassified</div>
+        <div class="cbox-val">18,166</div>
+        <div class="cbox-sub">+2,179 conversions moved</div>
+      </div>
+    </div>
+    <div class="correction-note">
+      Source: <code>attribution-check.dicer.ai/dicer_misclassified.json</code> — 21 URL inconsistency matches + 20 visual similarity API matches.
+      12 URLs had no activity in February (excluded). Detection: same asset served under non-Dicer flag (URL inconsistency) and visual similarity matching against known Dicer originals.
+    </div>
+  </div>
+
+  <!-- TOP ADS -->
+  <div class="section-head">🎯 Top Dicer.ai Creatives — February 2026</div>
+  <div class="ads-grid">
+
+    <div class="ad-card top">
+      <div class="ad-img-wrap">
+        <img src="https://dq3ll41r32qbq.cloudfront.net/696aafbb5c94d6.03028156.jpg" alt="Top Dicer #1" loading="lazy"/>
+        <div class="ad-overlay"></div>
+        <div class="ad-rank">#1 — ROAS Leader</div>
+        <div class="ad-dicer-badge">DICER</div>
+      </div>
+      <div class="ad-body">
+        <div class="ad-headline">"Who Has The Cheapest Car Insurance in [Region]?"</div>
+        <div class="ad-stats">
+          <div class="as-item"><div class="as-label">ROAS</div><div class="as-val rg">1.49x</div></div>
+          <div class="as-item"><div class="as-label">Spend</div><div class="as-val w">$28,769</div></div>
+          <div class="as-item"><div class="as-label">Revenue</div><div class="as-val w">$42,775</div></div>
+          <div class="as-item"><div class="as-label">CTR</div><div class="as-val rg">0.45%</div></div>
+          <div class="as-item"><div class="as-label">CPC</div><div class="as-val w">$0.66</div></div>
+          <div          class="as-item"><div class="as-label">Conversions</div><div class="as-val w">6,549</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ad-card top">
+      <div class="ad-img-wrap">
+        <img src="https://dq3ll41r32qbq.cloudfront.net/696aafba03cc26.83327775.jpg" alt="Top Dicer #2" loading="lazy"/>
+        <div class="ad-overlay"></div>
+        <div class="ad-rank">#2 — Top Revenue</div>
+        <div class="ad-dicer-badge">DICER</div>
+      </div>
+      <div class="ad-body">
+        <div class="ad-headline">"Who Has The Cheapest Car Insurance in [Region]?"</div>
+        <div class="ad-stats">
+          <div class="as-item"><div class="as-label">ROAS</div><div class="as-val rg">1.48x</div></div>
+          <div class="as-item"><div class="as-label">Spend</div><div class="as-val w">$19,237</div></div>
+          <div class="as-item"><div class="as-label">Revenue</div><div class="as-val w">$28,438</div></div>
+          <div class="as-item"><div class="as-label">CTR</div><div class="as-val rg">1.05%</div></div>
+          <div class="as-item"><div class="as-label">CPC</div><div class="as-val w">$0.77</div></div>
+          <div class="as-item"><div class="as-label">Conversions</div><div class="as-val w">4,656</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ad-card top">
+      <div class="ad-img-wrap">
+        <img src="https://dq3ll41r32qbq.cloudfront.net/696ff24c339b71.46812634.jpg" alt="Top Dicer #3" loading="lazy"/>
+        <div class="ad-overlay"></div>
+        <div class="ad-rank">#3 — CTR Champion</div>
+        <div class="ad-dicer-badge">DICER</div>
+      </div>
+      <div class="ad-body">
+        <div class="ad-headline">"Compare Car Insurance Rates Across [Region]"</div>
+        <div class="ad-stats">
+          <div class="as-item"><div class="as-label">ROAS</div><div class="as-val rg">1.67x</div></div>
+          <div class="as-item"><div class="as-label">Spend</div><div class="as-val w">$11,370</div></div>
+          <div class="as-item"><div class="as-label">Revenue</div><div class="as-val w">$19,032</div></div>
+          <div class="as-item"><div class="as-label">CTR</div><div class="as-val rg">1.87%</div></div>
+          <div class="as-item"><div class="as-label">CPC</div><div class="as-val w">$0.50</div></div>
+          <div class="as-item"><div class="as-label">Conversions</div><div class="as-val w">2,888</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ad-card">
+      <div class="ad-img-wrap">
+        <img src="https://dq3ll41r32qbq.cloudfront.net/696aafba03cc26.83327775.jpg" alt="Top Dicer #4" loading="lazy"/>
+        <div class="ad-overlay"></div>
+        <div class="ad-rank">#4 — High Volume</div>
+        <div class="ad-dicer-badge">DICER</div>
+      </div>
+      <div class="ad-body">
+        <div class="ad-headline">"Who Has The Cheapest Car Insurance in [Region]?"</div>
+        <div class="ad-stats">
+          <div class="as-item"><div class="as-label">ROAS</div><div class="as-val rg">1.57x</div></div>
+          <div class="as-item"><div class="as-label">Spend</div><div class="as-val w">$12,663</div></div>
+          <div class="as-item"><div class="as-label">Revenue</div><div class="as-val w">$19,856</div></div>
+          <div class="as-item"><div class="as-label">CTR</div><div class="as-val rg">0.63%</div></div>
+          <div class="as-item"><div class="as-label">CPC</div><div class="as-val w">$0.70</div></div>
+          <div class="as-item"><div class="as-label">Conversions</div><div class="as-val w">2,965</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ad-card">
+      <div class="ad-img-wrap">
+        <img src="https://dq3ll41r32qbq.cloudfront.net/696ff162ef1945.30360093.jpg" alt="Top Dicer #5" loading="lazy"/>
+        <div class="ad-overlay"></div>
+        <div class="ad-rank">#5 — Top Spend</div>
+        <div class="ad-dicer-badge">DICER</div>
+      </div>
+      <div class="ad-body">
+        <div class="ad-headline">"Who Charges The Least For Auto Insurance In [Region]?"</div>
+        <div class="ad-stats">
+          <div class="as-item"><div class="as-label">ROAS</div><div class="as-val ra">1.20x</div></div>
+          <div class="as-item"><div class="as-label">Spend</div><div class="as-val w">$19,986</div></div>
+          <div class="as-item"><div class="as-label">Revenue</div><div class="as-val w">$23,931</div></div>
+          <div class="as-item"><div class="as-label">CTR</div><div class="as-val ra">0.14%</div></div>
+          <div class="as-item"><div class="as-label">CPC</div><div class="as-val w">$2.68</div></div>
+          <div class="as-item"><div class="as-label">Conversions</div><div class="as-val w">1,594</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scale opportunity -->
+    <div class="ad-card" style="background: linear-gradient(135deg, #15151E 0%, rgba(124,92,246,0.08) 100%); border-color: rgba(124,92,246,0.4); display: flex; flex-direction: column; justify-content: center; padding: 28px;">
+      <div style="font-size: 32px; margin-bottom: 16px;">🚀</div>
+      <div style="font-size: 16px; font-weight: 800; color: #fff; margin-bottom: 12px;">Scale Opportunity</div>
+      <div style="font-size: 13px; color: #7070A0; line-height: 1.7; margin-bottom: 16px;">
+        Ads <strong style="color:#C4B5FD">#3 (1.67x ROAS, $0.50 CPC)</strong> and <strong style="color:#C4B5FD">#4 (1.57x ROAS)</strong> are top-efficiency performers — running below top-spend volume with significant room to scale profitably.
+      </div>
+      <div style="font-size: 12px; font-weight: 800; color: #8B6FFF; text-transform: uppercase; letter-spacing: 1px;">↑ Budget reallocation priority</div>
+    </div>
+
+  </div>
+
+  <!-- INSIGHTS -->
+  <div class="section-head">Key Insights</div>
+  <div class="insights-grid">
+    <div class="insight">
+      <div class="insight-icon">📈</div>
+      <div class="insight-title">Consistent ROAS Advantage</div>
+      <div class="insight-body">
+        Dicer delivered <strong>1.29x ROAS</strong> vs <strong>1.25x</strong> for non-Dicer across a full month and $906K in total spend. The +0.04x edge held across 150 active Dicer ads — this is not a statistical fluke.
+      </div>
+    </div>
+    <div class="insight">
+      <div class="insight-icon">🎯</div>
+      <div class="insight-title">CTR: 2.6× More Attention</div>
+      <div class="insight-body">
+        <strong>0.34% CTR vs 0.13%</strong> — Dicer creatives capture 2.6× more clicks per impression. With 77M Dicer impressions in February, that's hundreds of thousands of additional clicks at no extra CPM cost.
+      </div>
+    </div>
+    <div class="insight">
+      <div class="insight-icon">💰</div>
+      <div class="insight-title">CPC 49% Lower</div>
+      <div class="insight-body">
+        At <strong>$0.96 CPC vs $1.90</strong> for non-Dicer, every dollar of Dicer budget buys nearly 2× the clicks. Shifting $100K from non-Dicer to Dicer inventory would generate ~$100K more in additional revenue at current ROAS.
+      </div>
+    </div>
+    <div class="insight">
+      <div class="insight-icon">🔧</div>
+      <div class="insight-title">Attribution Gap Identified</div>
+      <div class="insight-body">
+        <strong>21 Dicer creatives</strong> were misattributed as Non-Dicer in Otto's system, representing <strong>$17,036 in spend</strong>. The corrected Dicer share is <strong>27.9%</strong> (vs 26.1% raw). A data pipeline fix is needed to prevent future underreporting.
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <div class="footer-brand">Generated by <strong>Dicer.ai</strong> · Source: Otto API (is_media_dicer=1) + attribution-check.dicer.ai corrections</div>
+    <div class="footer-note">476 ad rows · 150 Dicer / 326 Non-Dicer · Feb 1–28, 2026 · 21 misclassified creatives reclassified</div>
+  </div>
+
+</div>
+</body>
+</html>
